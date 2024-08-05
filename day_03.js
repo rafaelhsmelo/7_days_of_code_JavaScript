@@ -1,53 +1,35 @@
 // Seu desafio de hoje é criar os destinos possíveis de um jogo, em que o usuário consiga escolher:
 
 // 1. Se quer seguir para área de Front-End ou seguir para a área de Back-End.
-let estudos = prompt('Você gostaria de estudar Front-End ou Back-End?').toLowerCase();
-
-//Loop para definir se estudará Front ou Back-End.
-while (true) {
-    if (estudos.includes('front')) {
-        estudos = 'front';
-        break;
-    } else if (estudos.includes('back')) {
-        estudos = 'back';
-        break;
+const areas = {
+    front: ['react', 'vue'],
+    back: ['c#', 'java']
+  };
+  
+  let estudos = prompt('Você gostaria de estudar Front-End ou Back-End?').toLowerCase();
+  
+  // Loop para definir se estudará Front ou Back-End.
+  while (true) {
+    if (areas.hasOwnProperty(estudos)) {
+      break;
     } else {
-        estudos = prompt('Descupe, não entendi. Você gostaria de estudar Front-End ou Back-End?').toLowerCase();
+      estudos = prompt('Descupe, não entendi. Você gostaria de estudar Front-End ou Back-End?').toLowerCase();
     }
-}
-
-if (estudos === "front") {
-    linguagem = prompt('Você gostaria de estudar React ou Vue?').toLowerCase();
-
-    while (true) {
-        if (linguagem.includes('react')) {
-            linguagem = 'react';
-            break;
-
-        } else if (linguagem.includes('vue')) {
-            linguagem = 'vue';
-            break;
-
-        } else {
-            linguagem = prompt('Desculpe, não entendi. Você gostaria de estudar React ou Vue?').toLowerCase();
-        }
+  }
+  
+  let linguagem = prompt(`Você gostaria de estudar ${areas[estudos].join(' ou ')}?`).toLowerCase();
+  
+  // Loop para definir a linguagem
+  while (true) {
+    if (areas[estudos].includes(linguagem)) {
+      break;
+    } else {
+      linguagem = prompt(`Desculpe, não entendi. As opções para ${estudos} são ${areas[estudos].join(' ou ')}.`).toLowerCase();
     }
-} else if (estudos === 'back') {
-    linguagem = prompt('Você gostaria de estudar C# ou Java?').toLowerCase();
-    while (true) {
-        if (linguagem.includes('c#')) {
-            linguagem = 'c';
-            break;
-        } else if (linguagem.includes('java')) {
-            linguagem = 'java';
-            break;
-        } else {
-            linguagem = prompt('Desculpe, não entendi. Você gostaria de estudar C# ou Java?').toLowerCase();
-        }
-    }
-} else {
-    alert('Algo deu errado. Por favor, tente novamente.')
-}
+  }
+  
+  console.log(`Você escolheu estudar ${estudos} com foco em ${linguagem}.`);
+  
 
 // 2. Caso esteja na área de Front-End, se quer aprender React ou aprender Vue. Caso esteja na área de Back-End, poderá aprender C# ou aprender Java.
 
