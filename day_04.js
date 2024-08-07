@@ -1,6 +1,21 @@
-//Sorteia um número aleatório e registra no log.
-let numSecreto = Math.round(Math.random() * 50 + 1);
-console.log(numSecreto);
+let numSecreto, totalTentativas, contadorTentativas;
+let numMax = 50;
+let botao = document.getElementById('botao');
+
+//Estado inicial do jogo
+function iniciar() {
+    //Determina o número máximo e sorteia um aleatório.
+    numSecreto = Math.round(Math.random() * numMax) + 1;
+    console.log(`Shhh. O número secreto é ${numSecreto}. Mas não conta pra ninguém!`);
+
+    //Determina e avisa o número de chances.
+    totalTentativas = 10;
+    contadorTentativas = 0;
+    imprime('chances', `Você tem ${totalTentativas} tentativas.`);
+}
+
+//Chama a função para iniciar o jogo.
+iniciar();
 
 //Imprime o 'txt' no 'id' informado dentro do HTML.
 function imprime(id, txt) {
@@ -9,17 +24,8 @@ function imprime(id, txt) {
 
 //Checa se no texto deve ser 'tentativa' ou 'tentativaS'.
 function checaPluralTentativa() {
-    if (totalTentativas == 1) {
-        return 'tentativa';
-    } else {
-        return 'tentativas';
-    }
+    return totalTentativas === 1 ? 'tentativa' : 'tentativas';
 }
-
-//Determina e avisa o número de chances.
-let totalTentativas = 10;
-let contadorTentativas = 0;
-imprime('chances', `Você tem ${totalTentativas} tentativas.`);
 
 //Função executada quando o botão é clicado.
 function chutar() {
@@ -38,9 +44,13 @@ function chutar() {
         contadorTentativas++;
 
         //Checa se houve acerto.
-        if (numChute == numSecreto) {
+        if (numChute === numSecreto) {
             imprime('msg', 'Parabéns! Você ganhou.');
             imprime('chances', `Você acertou em ${contadorTentativas} ${checaPluralTentativa()}.`);
+
+            // Muda o texto e função do botão para "Reiniciar"
+            botao.innerText = 'Reiniciar';
+            botao.onclick = reiniciar;
 
             //Havendo erro, avisa.
         } else {
@@ -53,15 +63,22 @@ function chutar() {
                 imprime('chances', `Você ainda tem ${totalTentativas} ${checaPluralTentativa()}.`);
             }
         }
-
         //Não havendo mais chances, avisa.
     } else {
         imprime('msg', 'Que pena. Você perdeu');
         imprime('chances', `Acabaram suas tentativas, tente de novo.`);
+
+        // Muda o texto e função do botão para "Reiniciar"
+        botao.innerText = 'Reiniciar';
+        botao.onclick = reiniciar;
     }
 }
 
+function reiniciar() {
+    //Devolve o jogo para seu status inicial;
+    iniciar();
 
-
-
-
+    // Muda o texto e função do botão de volta para "Chutar"
+    botao.innerText = 'Chutar';
+    botao.onclick = chutar;
+}
