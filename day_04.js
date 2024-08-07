@@ -2,56 +2,66 @@
 let numSecreto = Math.round(Math.random() * 50 + 1);
 console.log(numSecreto);
 
-let chances = 10;
-
 //Imprime o 'txt' no 'id' informado dentro do HTML.
 function imprime(id, txt) {
     document.getElementById(id).innerText = txt;
 }
-imprime('chances', `Você tem ${chances} chances.`);
 
-//Checa se o número digitado é igual ao sorteado.
+//Checa se no texto deve ser 'tentativa' ou 'tentativaS'.
+function checaPluralTentativa() {
+    if (totalTentativas == 1) {
+        return 'tentativa';
+    } else {
+        return 'tentativas';
+    }
+}
+
+//Determina e avisa o número de chances.
+let totalTentativas = 10;
+let contadorTentativas = 0;
+imprime('chances', `Você tem ${totalTentativas} tentativas.`);
+
+//Função executada quando o botão é clicado.
 function chutar() {
-    let chute = parseInt(document.getElementById('chute').value);
+    //Recebe o valor digitado e limpa o campo para o próximo chute.
+    let numChute = parseInt(document.getElementById('chute').value);
     document.getElementById('chute').value = '';
-    console.log(chute);
-    tentativas = 0;
-    imprime('msg', '');
+    document.getElementById('chute').focus();
 
-    while (tentativas < chances) {
-        if (chances > 0) {
+    //Checa se o chute é inválido.
+    if (isNaN(numChute) || numChute < 0) {
+        imprime('msg', 'Chute inválido. Tente novamente.');
 
-            if (isNaN(chute) || chute < 1) {
-                imprime('msg', 'Chute inválido, tente novamente.');
-                break;
-            } else if (chute == numSecreto) {
-                imprime('msg', 'Parabéns! Você acertou.');
-                break;
-            } else {
-                imprime('msg', 'Que pena! Você errou.');
-                chances--;
-                imprime('chances', `Você tem ${chances} chances.`)
-                break;
-            }
+        //Checa se ainda há chances de tentar.
+    } else if (totalTentativas > 1) {
+        totalTentativas--;
+        contadorTentativas++;
 
+        //Checa se houve acerto.
+        if (numChute == numSecreto) {
+            imprime('msg', 'Parabéns! Você ganhou.');
+            imprime('chances', `Você acertou em ${contadorTentativas} ${checaPluralTentativa()}.`);
+
+            //Havendo erro, avisa.
         } else {
-            imprime('msg', 'Que pena! Você perdeu.')
+            //Checa e avisa se o chute é menor ou maior que o número secreto.
+            if (numSecreto < numChute) {
+                imprime('msg', `Que pena, você errou. O número sorteado é menor que ${numChute}`);
+                imprime('chances', `Você ainda tem ${totalTentativas} ${checaPluralTentativa()}.`);
+            } else {
+                imprime('msg', `Que pena, você errou. O número sorteado é maior que ${numChute}`);
+                imprime('chances', `Você ainda tem ${totalTentativas} ${checaPluralTentativa()}.`);
+            }
         }
+
+        //Não havendo mais chances, avisa.
+    } else {
+        imprime('msg', 'Que pena. Você perdeu');
+        imprime('chances', `Acabaram suas tentativas, tente de novo.`);
     }
-        // while (isNaN(chute) || chute < 0) {
-        //     imprime('msg', 'Chute inválido, tente novamente.');
-        //     break;
-        // }
+}
 
-        // for (let tentativas = 0; tentativas < chances; tentativas++) {
-        //     if (chute) {
 
-        //     } else {
 
-        //     }
-        // }
 
-    }
-//Avisa do número e quantidade de tentativas
-//Pede o chute e checa se é válido
-//Checa se ainda há tentativas disponíveis e tenta de novo
+
