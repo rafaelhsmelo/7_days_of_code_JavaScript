@@ -23,39 +23,29 @@ function obterCategoria(numCategoria) {
     }
 }
 
+// Função auxiliar para gerar o texto de uma categoria
+function gerarTextoCategoria(nome, itens) {
+    if (itens.length > 0) {
+        let textoCategoria = `${nome}:\n`;
+        itens.forEach((item, index) => {
+            textoCategoria += `${index + 1}. ${item}\n`;
+        });
+        textoCategoria += '\n';  // Adiciona uma linha em branco entre categorias
+        return textoCategoria;
+    }
+    return '';
+}
+
 function atualizaLista() {
     let listaFinal = '';
 
-    //Checa se cada categoria está vazia para imprimir na lista.
-    if (frutas.length > 0) {
-        listaFinal += 'Frutas:\n';
-        frutas.forEach((item, index) => {
-            listaFinal += `${index + 1}. ${item}\n`;
-        });
-    }
+    // Gera o texto para cada categoria, usando a função auxiliar
+    listaFinal += gerarTextoCategoria('Frutas', frutas);
+    listaFinal += gerarTextoCategoria('Lacticínios', laticinios);
+    listaFinal += gerarTextoCategoria('Congelados', congelados);
+    listaFinal += gerarTextoCategoria('Doces', doces);
 
-    if (laticinios.length > 0) {
-        listaFinal += 'Lacticínios:\n';
-        laticinios.forEach((item, index) => {
-            listaFinal += `${index + 1}. ${item}\n`;
-        });
-    }
-
-    if (congelados.length > 0) {
-        listaFinal += 'Congelados:\n';
-        congelados.forEach((item, index) => {
-            listaFinal += `${index + 1}. ${item}\n`;
-        });
-    }
-
-    if (doces.length > 0) {
-        listaFinal += 'Doces:\n';
-        doces.forEach((item, index) => {
-            listaFinal += `${index + 1}. ${item}\n`;
-        });
-    }
-
-    listaHTML.innerText = listaFinal || 'Sua lista está vazia.\n';
+    listaHTML.innerText = listaFinal.trim() || 'Sua lista está vazia.\n';  // Remove espaços em branco extras no final
 }
 
 
@@ -85,7 +75,7 @@ function adicionar() {
 
 function remover() {
 
-    
+
 }
 
 function limpar() {
