@@ -3,78 +3,89 @@ let laticinios = ['Iogurte'];
 let congelados = [];
 let doces = [];
 
-let nomeCategoria, numCategoria, item;
+let numCategoria, nomeCategoria;
+
 let listaHTML = document.getElementById('listaDeCompras');
-atualizaLista();
+listaTotal();
 
-// Correlaciona número e categoria.
-function obterCategoria(numCategoria) {
-    switch (numCategoria) {
-        case 1:
-            return frutas;
-        case 2:
-            return laticinios;
-        case 3:
-            return congelados;
-        case 4:
-            return doces;
-        default:
-            return null;
-    }
-}
+// Indexa as categorias
+function recebeCategoria(msg) {
 
-// Função auxiliar para gerar o texto de uma categoria
-function gerarTextoCategoria(nome, itens) {
-    if (itens.length > 0) {
-        let textoCategoria = `${nome}:\n`;
-        itens.forEach((item, index) => {
-            textoCategoria += `${index + 1}. ${item}\n`;
-        });
-        textoCategoria += '\n';  // Adiciona uma linha em branco entre categorias
-        return textoCategoria;
-    }
-    return '';
-}
-
-function atualizaLista() {
-    let listaFinal = '';
-
-    // Gera o texto para cada categoria, usando a função auxiliar
-    listaFinal += gerarTextoCategoria('Frutas', frutas);
-    listaFinal += gerarTextoCategoria('Lacticínios', laticinios);
-    listaFinal += gerarTextoCategoria('Congelados', congelados);
-    listaFinal += gerarTextoCategoria('Doces', doces);
-
-    listaHTML.innerText = listaFinal.trim() || 'Sua lista está vazia.\n';  // Remove espaços em branco extras no final
-}
-
-
-function adicionar() {
-
+    // Atribui números às categorias
     while (true) {
-        numCategoria = parseInt(prompt('Qual a categoria que gostaria de adicionar:\n 1) Frutas\n 2) Lacticínios\n 3) Congelados\n 4) Doces\n\n Difite apenas o número.'));
+        numCategoria = prompt(`${msg}\n 1) Frutas\n 2) Lacticínios\n 3) Congelados\n 4) Doces\n\n Digite apenas o número.`);
 
-        // Clicar 'cancelar' sai do loop.
+        // Opção de cancelar
         if (numCategoria === null) {
             return;
         }
 
-        // Busca a categoria pelo número.
-        nomeCategoria = obterCategoria(numCategoria);
-
-        // Pede o item, o adiciona à categoria e atualiza a lista.
-        item = prompt(`Qual o item você gostaria de adicionar à categoria?`);
-        if (item) {
-            nomeCategoria.push(item);
-            atualizaLista();
-            break;
+        switch (parseInt(numCategoria)) {
+            case 1:
+                return frutas;
+            case 2:
+                return laticinios;
+            case 3:
+                return congelados;
+            case 4:
+                return doces;
+            default:
+                alert('Desculpe, não entendi.\nTente novamente.');
+                continue;
         }
-
     }
 }
 
-function remover() {
+// Lista e indexa os itens de cada string
+function listaCategoria(tituloCategoria, nomeCategoria) {
+    if (nomeCategoria.length > 0) {
+        let textoCategoria = `${tituloCategoria}:\n`;
+        nomeCategoria.forEach((element, index) => {
+            textoCategoria += `${index + 1}. ${element}\n`;
+        });
 
+        // Adiciona uma linha em branco entre categorias
+        textoCategoria += '\n';
+        return textoCategoria;
+
+        // Não imprime lista vazia
+    } else {
+        return '';
+    }
+}
+
+// Atualiza a lista com todas as categorias não vazias
+function listaTotal() {
+    let listaFinal = '';
+
+    listaFinal += listaCategoria('Frutas', frutas);
+    listaFinal += listaCategoria('Lacticínios', laticinios);
+    listaFinal += listaCategoria('Congelados', congelados);
+    listaFinal += listaCategoria('Doces', doces);
+
+    // Remove espaços em branco extras no final
+    listaHTML.innerText = listaFinal.trim()+'\n' || 'Sua lista está vazia.\n';
+}
+
+function adicionar() {
+    nomeCategoria = recebeCategoria(`Qual a categoria que gostaria de adicionar um item:`);
+
+    if (numCategoria === null) {
+        return;
+    }
+
+    let item = prompt(`Qual o item você gostaria de adicionar à categoria?`);
+
+    // Checa se o item é válido
+    if (item) {
+        nomeCategoria.push(item);
+        listaTotal();
+    }
+
+
+}
+
+function remover() {
 
 }
 
@@ -83,5 +94,5 @@ function limpar() {
     laticinios = [];
     congelados = [];
     doces = [];
-    atualizaLista();
+    listaTotal();
 }
