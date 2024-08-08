@@ -1,11 +1,27 @@
-let frutas = [];
-let laticinios = [];
+let frutas = ['Banana', 'Coco', 'Melancia'];
+let laticinios = ['Iogurte'];
 let congelados = [];
 let doces = [];
 
 let nomeCategoria, numCategoria, item;
 let listaHTML = document.getElementById('listaDeCompras');
-listaHTML.innerText = 'Sua lista está vazia.\n';
+atualizaLista();
+
+// Correlaciona número e categoria.
+function obterCategoria(numCategoria) {
+    switch (numCategoria) {
+        case 1:
+            return frutas;
+        case 2:
+            return laticinios;
+        case 3:
+            return congelados;
+        case 4:
+            return doces;
+        default:
+            return null;
+    }
+}
 
 function atualizaLista() {
     let listaFinal = '';
@@ -49,39 +65,27 @@ function adicionar() {
         numCategoria = parseInt(prompt('Qual a categoria que gostaria de adicionar:\n 1) Frutas\n 2) Lacticínios\n 3) Congelados\n 4) Doces\n\n Difite apenas o número.'));
 
         // Clicar 'cancelar' sai do loop.
-        if (numCategoria === num) {
+        if (numCategoria === null) {
             return;
         }
 
-        // Correlaciona número e categoria.
-        switch (numCategoria) {
-            case 1:
-                nomeCategoria = frutas;
-                break;
-            case 2:
-                nomeCategoria = laticinios
-                break;
-            case 3:
-                nomeCategoria = congelados
-                break;
-            case 4:
-                nomeCategoria = doces
-                break;
+        // Busca a categoria pelo número.
+        nomeCategoria = obterCategoria(numCategoria);
 
-            default:
-                alert('Desculpe, não entendi. Tente novamente.');
-                continue;
+        // Pede o item, o adiciona à categoria e atualiza a lista.
+        item = prompt(`Qual o item você gostaria de adicionar à categoria?`);
+        if (item) {
+            nomeCategoria.push(item);
+            atualizaLista();
+            break;
         }
-        break;
-    }
 
-    // Pede o item, o adiciona à categoria e atualiza a lista.
-    item = prompt(`Qual o item você gostaria de adicionar à categoria?`);
-    if (item) {
-        nomeCategoria.push(item);
-        atualizaLista();
     }
+}
 
+function remover() {
+
+    
 }
 
 function limpar() {
