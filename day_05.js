@@ -49,7 +49,7 @@ function adicionar() {
         numCategoria = parseInt(prompt('Qual a categoria que gostaria de adicionar:\n 1) Frutas\n 2) Lacticínios\n 3) Congelados\n 4) Doces\n\n Difite apenas o número.'));
 
         // Clicar 'cancelar' sai do loop.
-        if (numCategoria === num) {
+        if (numCategoria === null) {
             return;
         }
 
