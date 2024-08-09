@@ -92,11 +92,24 @@ function remover() {
         return;
     }
 
-    let numItem = prompt(`Qual item gostaria de remover:\n ${listaCategoria('', nomeCategoria)}`);
+    while (true) {
+        let numItem = prompt(`Qual item gostaria de remover:\n ${listaCategoria('', nomeCategoria)}`);
 
-    nomeCategoria.splice((numItem - 1), 1);
-    listaTotal();
+        if (numItem === null) {
+            return;
+        }
+
+        if (isNaN(numItem) || numItem <= 0 || numItem > nomeCategoria.length) {
+            alert('Desculpe, não entendi.\nTente novamente.');
+            continue;
+        } else {
+            nomeCategoria.splice((numItem - 1), 1);
+            listaTotal();
+            break;
+        }
+    }
 }
+
 
 function limpar() {
     frutas = [];
