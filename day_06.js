@@ -64,7 +64,7 @@ function listaTotal() {
     listaFinal += listaCategoria('Doces', doces);
 
     // Remove espaços em branco extras no final
-    listaHTML.innerText = listaFinal.trim()+'\n' || 'Sua lista está vazia.\n';
+    listaHTML.innerText = listaFinal.trim() + '\n' || 'Sua lista está vazia.\n';
 }
 
 function adicionar() {
@@ -86,7 +86,16 @@ function adicionar() {
 }
 
 function remover() {
+    nomeCategoria = recebeCategoria(`Qual a categoria que gostaria de remover um item:`);
 
+    if (numCategoria === null) {
+        return;
+    }
+
+    let numItem = prompt(`Qual item gostaria de remover:\n ${listaCategoria('', nomeCategoria)}`);
+
+    nomeCategoria.splice((numItem - 1), 1);
+    listaTotal();
 }
 
 function limpar() {
