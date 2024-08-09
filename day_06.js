@@ -1,5 +1,5 @@
-let frutas = ['Banana', 'Coco', 'Melancia'];
-let laticinios = ['Iogurte'];
+let frutas = [];
+let laticinios = [];
 let congelados = [];
 let doces = [];
 
@@ -92,8 +92,9 @@ function remover() {
         return;
     }
 
+    // Checa se o item é valido
     while (true) {
-        let numItem = prompt(`Qual item gostaria de remover:\n ${listaCategoria('', nomeCategoria)}`);
+        let numItem = prompt(`Qual item gostaria de remover ${listaCategoria('', nomeCategoria)}`);
 
         if (numItem === null) {
             return;
